@@ -566,7 +566,12 @@
     });
   });
 
-  ['upl', 'sched', 'nextBtn'].forEach(id => document.getElementById(id).addEventListener('click', showToast));
+  ['upl', 'sched'].forEach(id => document.getElementById(id).addEventListener('click', showToast));
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  try{ tg.HapticFeedback.notificationOccurred('success'); }catch(e){}
+  tg.sendData(JSON.stringify({ action: 'next', step: 1, group: current ? current.id : null }));
+});
 
   // ---- group list ----
   const chevSvg = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
