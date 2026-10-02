@@ -18,6 +18,7 @@
     --blue:#3b9dff;
     --blue2:#1f6fe0;
     --tint:#0e2140;
+    --field:#0d131b;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   [hidden]{display:none!important}
@@ -26,7 +27,7 @@
     background:radial-gradient(520px 220px at 50% -60px, rgba(59,157,255,.16), transparent 70%), var(--bg);
     color:var(--text);
     min-height:100vh;
-    padding:22px 12px calc(24px + env(safe-area-inset-bottom));
+    padding:22px 12px calc(28px + env(safe-area-inset-bottom));
   }
   body.withtabs{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
   .view{animation:fade .25s ease}
@@ -133,6 +134,101 @@
   .tab svg{width:22px;height:22px}
   .tab.on{color:var(--blue)}
 
+  /* ---------- create giveaway (step 1) ---------- */
+  .ch{display:flex;align-items:center;gap:12px;margin:0 2px 16px}
+  .ch .t{flex:1;min-width:0}
+  .ch h1{font-size:22px;font-weight:700;line-height:1.1}
+  .ch p{font-size:13px;color:var(--muted);margin-top:3px}
+  .cbtn{
+    width:38px;height:38px;border-radius:50%;flex:none;cursor:pointer;
+    background:#101720;border:1px solid var(--border);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cbtn svg{width:18px;height:18px}
+  .cbtn:active{border-color:var(--blue)}
+
+  .prog{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:4px 0 8px}
+  .prog i{height:4px;border-radius:4px;background:#1a2431}
+  .prog i.on{background:linear-gradient(90deg,var(--blue),var(--blue2))}
+  .step{font-size:13px;color:var(--muted);margin-bottom:22px}
+
+  .fld{margin-bottom:22px}
+  .lbl{
+    display:block;margin-bottom:9px;
+    font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8b97a8;
+  }
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+  .grid2 .fld{margin-bottom:0}
+  .grid2.pw{grid-template-columns:1.15fr 1fr}
+
+  .inp{
+    width:100%;height:52px;padding:0 16px;
+    background:var(--field);border:1px solid var(--border);border-radius:14px;
+    color:#fff;font-family:inherit;font-size:16px;outline:none;
+    transition:border-color .15s,box-shadow .15s;
+  }
+  .inp::placeholder{color:#56627a}
+  .inp:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,157,255,.14)}
+
+  select.inp{
+    appearance:none;-webkit-appearance:none;padding-right:38px;font-weight:600;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23b6c2d4' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;
+  }
+  select.inp option{background:#0b1017;color:#fff}
+
+  .stp{
+    display:flex;align-items:center;justify-content:space-between;
+    height:52px;padding:5px;background:var(--field);border:1px solid var(--border);border-radius:14px;
+  }
+  .stp button{
+    width:40px;height:40px;border:0;border-radius:11px;cursor:pointer;
+    background:#151d28;color:#fff;font-family:inherit;font-size:22px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .stp button:active{background:var(--tint);color:var(--blue)}
+  .stp output{font-size:18px;font-weight:700}
+
+  .chips{display:grid;gap:10px}
+  .chips.c3{grid-template-columns:repeat(3,1fr)}
+  .chips.c2{grid-template-columns:1fr 1fr}
+  .chips + .chips{margin-top:10px}
+  .chip{
+    height:46px;border-radius:13px;cursor:pointer;
+    background:var(--field);border:1px solid var(--border);color:#9aa6b6;
+    font-family:inherit;font-size:14px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    transition:background .15s,color .15s;
+  }
+  .chip svg{width:16px;height:16px}
+  .chip.on{background:linear-gradient(135deg,var(--blue),var(--blue2));border-color:transparent;color:#fff}
+  .hint{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.45}
+
+  .upl{
+    height:84px;border:1.5px dashed #24324a;border-radius:16px;background:var(--card);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    color:#b6c2d4;font-size:15px;font-weight:600;
+  }
+  .upl svg{width:20px;height:20px}
+
+  .sched{
+    display:flex;align-items:center;gap:12px;height:54px;padding:0 16px;margin-bottom:20px;cursor:pointer;
+    background:var(--field);border:1px solid var(--border);border-radius:14px;
+    font-size:15px;font-weight:600;
+  }
+  .sched svg{width:18px;height:18px;flex:none}
+  .sched .arr{margin-left:auto;color:var(--muted)}
+
+  .next{
+    width:100%;height:54px;border:0;border-radius:16px;cursor:pointer;
+    background:linear-gradient(135deg,#4aa8ff,#1f6fe0);color:#fff;
+    font-family:inherit;font-size:16px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    box-shadow:0 8px 24px rgba(59,157,255,.28);
+  }
+  .next svg{width:18px;height:18px}
+  .next:active{transform:scale(.985)}
+
   /* ---------- toast ---------- */
   .toast{
     position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));
@@ -172,7 +268,7 @@
     </div>
 
     <div class="cards">
-      <div class="card hl">
+      <div class="card hl" id="cardCreate">
         <div class="ibox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 11.3 2 22l10.7-3.79"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/><path d="m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11-.11.7-.72 1.22-1.43 1.22H17"/><path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7"/><path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"/></svg></div>
         <div><b>Create giveaway</b><small>Launch a new one in seconds</small></div>
       </div>
@@ -191,7 +287,129 @@
     </div>
   </div>
 
-  <!-- ===== bottom tab bar (group view only) ===== -->
+  <!-- ===== VIEW 3: create giveaway (step 1 of 4) ===== -->
+  <div id="viewCreate" class="view" hidden>
+    <div class="ch">
+      <div class="cbtn" id="cBack">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </div>
+      <div class="t">
+        <h1>Giveaways</h1>
+        <p>Create giveaway</p>
+      </div>
+      <div class="cbtn" id="cHome">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      </div>
+    </div>
+
+    <div class="prog"><i class="on"></i><i></i><i></i><i></i></div>
+    <div class="step">Step 1 of 4 · Basics</div>
+
+    <div class="grid2 pw">
+      <div class="fld">
+        <label class="lbl">Prize</label>
+        <input class="inp" type="text" placeholder="e.g. $100">
+      </div>
+      <div class="fld">
+        <label class="lbl">Winners</label>
+        <div class="stp">
+          <button type="button" id="wMinus">−</button>
+          <output id="wVal">1</output>
+          <button type="button" id="wPlus">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="fld">
+      <label class="lbl">Hosts (optional, comma separated)</label>
+      <input class="inp" type="text" placeholder="@alice, @bob">
+    </div>
+
+    <div class="fld">
+      <label class="lbl">Duration</label>
+      <div class="chips c3">
+        <button type="button" class="chip" data-g="dur">1 hour</button>
+        <button type="button" class="chip on" data-g="dur">1 day</button>
+        <button type="button" class="chip" data-g="dur">1 week</button>
+      </div>
+      <div class="chips c2">
+        <button type="button" class="chip" data-g="dur">Custom</button>
+        <button type="button" class="chip" data-g="dur">End at a time</button>
+      </div>
+    </div>
+
+    <div class="fld">
+      <label class="lbl">Countdown</label>
+      <div class="chips c2">
+        <button type="button" class="chip on" data-g="cd">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Live
+        </button>
+        <button type="button" class="chip" data-g="cd">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+          Static
+        </button>
+      </div>
+      <div class="hint">Refreshes every minute as it ticks down.</div>
+    </div>
+
+    <div class="fld">
+      <label class="lbl">Media (optional image or video)</label>
+      <div class="upl" id="upl">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        Upload media
+      </div>
+      <div class="hint">PNG, JPG, GIF, WebP or MP4, up to 5MB — GIFs and videos post as animations.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="fld">
+        <label class="lbl">Entry button color</label>
+        <select class="inp">
+          <option>Default</option>
+          <option>Blue</option>
+          <option>Green</option>
+          <option>Red</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label class="lbl">Entry button</label>
+        <select class="inp">
+          <option>Open DM</option>
+          <option>Join in chat</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fld">
+      <label class="lbl">Entry button text</label>
+      <input class="inp" type="text" placeholder="Enter giveaway">
+    </div>
+
+    <div class="grid2">
+      <div class="fld">
+        <label class="lbl">End after N entries</label>
+        <input class="inp" type="text" inputmode="numeric" placeholder="off">
+      </div>
+      <div class="fld">
+        <label class="lbl">End reminder (min)</label>
+        <input class="inp" type="text" inputmode="numeric" placeholder="off">
+      </div>
+    </div>
+
+    <div class="sched" id="sched">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+      Schedule &amp; repeat
+      <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+
+    <button type="button" class="next" id="nextBtn">
+      Next
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </button>
+  </div>
+
+  <!-- ===== bottom tab bar (group dashboard only) ===== -->
   <nav class="tabs" id="tabs" hidden>
     <div class="tab on">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>
@@ -239,19 +457,21 @@
     }catch(e){ return null; }
   }
 
-  const snap      = readSnapshot();
-  const botUn     = snap && snap.b;
-  const viewList  = document.getElementById('viewList');
-  const viewGroup = document.getElementById('viewGroup');
-  const tabs      = document.getElementById('tabs');
-  const list      = document.getElementById('list');
-  const toast     = document.getElementById('toast');
-  const pill      = document.getElementById('pill');
-  const pillName  = document.getElementById('pillName');
-  const menu      = document.getElementById('menu');
+  const snap       = readSnapshot();
+  const botUn      = snap && snap.b;
+  const viewList   = document.getElementById('viewList');
+  const viewGroup  = document.getElementById('viewGroup');
+  const viewCreate = document.getElementById('viewCreate');
+  const tabs       = document.getElementById('tabs');
+  const list       = document.getElementById('list');
+  const toast      = document.getElementById('toast');
+  const pill       = document.getElementById('pill');
+  const pillName   = document.getElementById('pillName');
+  const menu       = document.getElementById('menu');
 
   let groups  = [];
   let current = null;
+  let view    = 'list';
 
   function showToast(){
     try{ tg.HapticFeedback.impactOccurred('light'); }catch(e){}
@@ -271,17 +491,23 @@
     return av;
   }
 
-  // ---- switching between the two screens ----
-  function show(view){
-    viewList.hidden  = view !== 'list';
-    viewGroup.hidden = view !== 'group';
-    tabs.hidden      = view !== 'group';
-    document.body.classList.toggle('withtabs', view === 'group');
+  // ---- switching between screens: list -> group -> create ----
+  function show(v){
+    view = v;
+    viewList.hidden   = v !== 'list';
+    viewGroup.hidden  = v !== 'group';
+    viewCreate.hidden = v !== 'create';
+    tabs.hidden       = v !== 'group';
+    document.body.classList.toggle('withtabs', v === 'group');
     closeMenu();
     window.scrollTo(0, 0);
-    try{ view === 'group' ? tg.BackButton.show() : tg.BackButton.hide(); }catch(e){}
+    try{ v === 'list' ? tg.BackButton.hide() : tg.BackButton.show(); }catch(e){}
   }
-  try{ tg.BackButton.onClick(() => show('list')); }catch(e){}
+
+  // Telegram's own back arrow: create -> group -> list
+  try{
+    tg.BackButton.onClick(() => show(view === 'create' ? 'group' : 'list'));
+  }catch(e){}
 
   function openGroup(g){
     current = g;
@@ -317,8 +543,30 @@
   });
   document.addEventListener('click', e => { if(!e.target.closest('.switch')) closeMenu(); });
 
-  // everything inside the dashboard is a placeholder for now
-  document.querySelectorAll('.card, .tab:not(.on)').forEach(el => el.addEventListener('click', showToast));
+  // dashboard: Create giveaway opens step 1, the other cards/tabs are placeholders
+  document.getElementById('cardCreate').addEventListener('click', () => show('create'));
+  document.querySelectorAll('.card:not(.hl), .tab:not(.on)').forEach(el => el.addEventListener('click', showToast));
+
+  // ---- create giveaway page ----
+  document.getElementById('cBack').addEventListener('click', () => show('group'));
+  document.getElementById('cHome').addEventListener('click', () => show('group'));
+
+  let winners = 1;
+  const wVal = document.getElementById('wVal');
+  document.getElementById('wMinus').addEventListener('click', () => { winners = Math.max(1, winners - 1); wVal.textContent = winners; });
+  document.getElementById('wPlus').addEventListener('click',  () => { winners = Math.min(99, winners + 1); wVal.textContent = winners; });
+
+  // chip groups: one selected per group (data-g)
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const g = chip.dataset.g;
+      document.querySelectorAll('.chip[data-g="' + g + '"]').forEach(c => c.classList.remove('on'));
+      chip.classList.add('on');
+      try{ tg.HapticFeedback.selectionChanged(); }catch(e){}
+    });
+  });
+
+  ['upl', 'sched', 'nextBtn'].forEach(id => document.getElementById(id).addEventListener('click', showToast));
 
   // ---- group list ----
   const chevSvg = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
