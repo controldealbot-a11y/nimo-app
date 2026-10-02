@@ -87,16 +87,17 @@
   <div id="toast" class="toast">Coming soon ✨</div>
 
 <script>
+  const REPO = 'controldealbot-a11y/nimo-app';
+
   const tg = window.Telegram.WebApp;
   tg.ready();
   tg.expand();
   try{ tg.setHeaderColor('#06080c'); tg.setBackgroundColor('#06080c'); }catch(e){}
 
-  // Telegram gives us the logged-in user (not displayed in this layout, but available)
   const tgUser = tg.initDataUnsafe && tg.initDataUnsafe.user;
 
-  // ---- read the groups the bot packed into the URL (?d=...) ----
-  function readData(){
+  // ---- snapshot the bot packed into the URL (?d=...), used as instant first paint ----
+  function readSnapshot(){
     try{
       const raw = new URLSearchParams(location.search).get('d');
       if(!raw) return null;
@@ -107,11 +108,10 @@
     }catch(e){ return null; }
   }
 
-  const data   = readData();
-  const groups = (data && data.g) || [];
-  const botUn  = data && data.b;
-  const list   = document.getElementById('list');
-  const toast  = document.getElementById('toast');
+  const snap  = readSnapshot();
+  const botUn = snap && snap.b;
+  const list  = document.getElementById('list');
+  const toast = document.getElementById('toast');
 
   function showToast(){
     try{ tg.HapticFeedback.impactOccurred('light'); }catch(e){}
@@ -121,42 +121,46 @@
 
   const chevSvg = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
 
-  if(groups.length){
-    groups.forEach(g => {
-      const row = document.createElement('div');
-      row.className = 'row';
+  function render(groups){
+    list.innerHTML = '';
 
-      const av = document.createElement('div');
-      av.className = 'gav';
-      av.textContent = (Array.from(g.t || '?')[0] || '?').toUpperCase();
+    if(groups.length){
+      groups.forEach(g => {
+        const row = document.createElement('div');
+        row.className = 'row';
 
-      // group photo (uploaded by the bot to the repo's photos/ folder)
-      if(g.p){
-        const img = new Image();
-        img.onload = () => { av.textContent = ''; av.appendChild(img); };
-        img.src = g.p;
-      }
+        const av = document.createElement('div');
+        av.className = 'gav';
+        av.textContent = (Array.from(g.t || '?')[0] || '?').toUpperCase();
 
-      const info = document.createElement('div');
-      info.className = 'info';
-      const b = document.createElement('b');
-      b.textContent = g.t;
-      const s = document.createElement('small');
-      s.textContent = 'Admin';
-      info.append(b, s);
+        if(g.p){
+          const img = new Image();
+          img.onload = () => { av.textContent = ''; av.appendChild(img); };
+          img.src = g.p;
+        }
 
-      row.append(av, info);
-      row.insertAdjacentHTML('beforeend', chevSvg);
-      row.addEventListener('click', showToast);
-      list.appendChild(row);
-    });
-  }else{
+        const info = document.createElement('div');
+        info.className = 'info';
+        const b = document.createElement('b');
+        b.textContent = g.t;
+        const s = document.createElement('small');
+        s.textContent = 'Admin';
+        info.append(b, s);
+
+        row.append(av, info);
+        row.insertAdjacentHTML('beforeend', chevSvg);
+        row.addEventListener('click', showToast);
+        list.appendChild(row);
+      });
+      return;
+    }
+
     const e = document.createElement('div');
     e.className = 'empty';
-    e.textContent = data
-      ? 'No groups yet. Add the bot to a group where you are an admin, send a message there, then reopen with /app.'
-      : 'Open this app with /app in the bot chat to load your groups.';
-    if(data && botUn){
+    e.textContent = (snap || tgUser)
+      ? 'No groups yet. Add the bot to a group where you are an admin, send a message there, and give it a couple of minutes.'
+      : 'Open this app from the bot in Telegram to load your groups.';
+    if(botUn){
       const btn = document.createElement('button');
       btn.textContent = 'Add Nimo to a group';
       btn.onclick = () => tg.openTelegramLink('https://t.me/' + botUn + '?startgroup=true');
@@ -165,6 +169,23 @@
     }
     list.appendChild(e);
   }
+
+  // ---- first paint from the snapshot, then fetch the live list every time the app opens ----
+  render((snap && snap.g) || []);
+
+  async function refresh(){
+    if(!tgUser) return;
+    try{
+      const r = await fetch(
+        'https://api.github.com/repos/' + REPO + '/contents/data/' + tgUser.id + '.json?t=' + Date.now(),
+        { headers: { 'Accept': 'application/vnd.github.raw+json' }, cache: 'no-store' }
+      );
+      if(!r.ok) return;            // no file yet -> keep the snapshot
+      const j = await r.json();
+      render(j.g || []);
+    }catch(e){}
+  }
+  refresh();
 </script>
 </body>
 </html>
